@@ -7,4 +7,29 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     //
+    public function login(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
+
+            // Redirect based on user role
+            $role = auth()->user()->role;
+            return match($role) {
+                'admin' => redirect('/admin/dashboard'),
+                'school' => redirect('/school/dashboard'),
+                'student' => redirect('/student/dashboard'),
+                default => redirect('/login')
+            };
+        }
+
+        // Login failed
+        return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
 }
