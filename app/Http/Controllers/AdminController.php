@@ -65,6 +65,7 @@ class AdminController extends Controller
     // Admin dashboard
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $user = auth()->user();
+        return view('admin.dashboard', compact('user'));
     }
 }

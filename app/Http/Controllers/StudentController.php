@@ -65,6 +65,7 @@ class StudentController extends Controller
     // Student dashboard
     public function dashboard()
     {   
-        return view('student.dashboard');
+        $user = auth()->user();
+        return view('student.dashboard', compact('user'));
     }
 }
