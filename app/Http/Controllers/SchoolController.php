@@ -61,4 +61,10 @@ class SchoolController extends Controller
     {
         //
     }
+
+    // School dashboard
+    public function dashboard()
+    {
+        return view('school.dashboard');
+    }
 }

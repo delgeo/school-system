@@ -61,4 +61,10 @@ class StudentController extends Controller
     {
         //
     }
+
+    // Student dashboard
+    public function dashboard()
+    {   
+        return view('student.dashboard');
+    }
 }
