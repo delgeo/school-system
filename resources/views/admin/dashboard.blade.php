@@ -7,14 +7,19 @@
 
 <h2>All Schools</h2>
 
+@if(session('message'))
+    <p style="color:green">{{ session('message') }}</p>
+@endif
+
 <table border="1" cellpadding="5">
     <thead>
         <tr>
-            <th>No.</th>
+            <th>#</th>
             <th>School Name</th>
             <th>Address</th>
             <th>Phone</th>
             <th>Status</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +30,21 @@
             <td>{{ $school->address }}</td>
             <td>{{ $school->phone }}</td>
             <td>{{ $school->is_active ? 'Active' : 'Inactive' }}</td>
+            <td>
+                <!-- Edit -->
+                <a href="{{ route('admin.schools.edit', $school->id) }}">Edit</a>
+
+                <!-- Toggle Active/Inactive -->
+                <form action="{{ route('admin.schools.toggle', $school->id) }}" method="POST" style="display:inline;">
+                    @csrf
+
+                    @if($school->is_active)
+                        <button type="submit">Deactivate</button>
+                    @else
+                        <button type="submit">Activate</button>
+                    @endif
+                </form>
+            </td>
         </tr>
         @endforeach
     </tbody>

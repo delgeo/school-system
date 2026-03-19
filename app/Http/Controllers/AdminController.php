@@ -74,4 +74,44 @@ class AdminController extends Controller
         // Pass both user and schools to the view
         return view('admin.dashboard', compact('user', 'schools'));
     }
+
+    // Show edit form for school
+    public function editSchool($id)
+    {
+        $school = School::findOrFail($id);  // Fetch the school
+        return view('admin.edit', compact('school'));  // Single edit blade
+    }
+
+    // Update school details
+    public function updateSchool(Request $request, $id)
+    {
+        $request->validate([
+            'school_name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        $school = School::findOrFail($id);
+
+        // If checkbox not checked, set is_active = false
+        $data = $request->all();
+        $data['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        $school->update($data);
+
+        return redirect('/admin/dashboard')->with('message', 'School updated successfully!');
+    }
+
+    // Deactivate school
+    public function toggleSchool($id)
+    {
+        $school = School::findOrFail($id);
+
+        // Toggle status
+        $school->is_active = !$school->is_active;
+        $school->save();
+
+        return redirect('/admin/dashboard')->with('message', 'School status updated!');
+    }
 }

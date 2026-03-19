@@ -20,3 +20,15 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->middleware('auth');
 Route::get('/school/dashboard', [SchoolController::class, 'dashboard'])->middleware('auth');
 Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->middleware('auth');
+
+// Show edit form
+Route::get('/admin/schools/{id}/edit', [AdminController::class, 'editSchool'])
+    ->name('admin.schools.edit');
+
+// Update school
+Route::put('/admin/schools/{id}', [AdminController::class, 'updateSchool'])
+    ->name('admin.schools.update');
+
+// Toggle school status
+Route::post('/admin/schools/{id}/toggle', [AdminController::class, 'toggleSchool'])
+    ->name('admin.schools.toggle');
