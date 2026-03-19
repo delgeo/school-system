@@ -114,4 +114,26 @@ class AdminController extends Controller
 
         return redirect('/admin/dashboard')->with('message', 'School status updated!');
     }
+
+    // Store new school
+    public function storeSchool(Request $request)
+    {
+        $request->validate([
+            'school_name' => 'required|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
+        ]);
+
+        $schoolUser = \App\Models\User::where('role', 'school')->first();
+
+        School::create([
+            'school_name' => $request->school_name,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'is_active' => 1,
+            'user_id' => $schoolUser->id,
+        ]);
+
+        return redirect('/admin/dashboard')->with('message', 'School created!');
+    }
 }

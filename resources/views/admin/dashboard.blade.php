@@ -49,3 +49,26 @@
         @endforeach
     </tbody>
 </table>
+
+<h2>Add New School</h2>
+
+<form method="POST" action="{{ route('admin.schools.store') }}">
+    @csrf
+
+    <div>
+        <label>School Name:</label>
+        <input type="text" name="school_name" required>
+    </div>
+
+    <div>
+        <label>Address:</label>
+        <input type="text" name="address">
+    </div>
+
+    <div>
+        <label>Phone:</label>
+        <input type="text" name="phone">
+    </div>
+
+    <button type="submit">Add School</button>
+</form>

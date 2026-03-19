@@ -32,3 +32,7 @@ Route::put('/admin/schools/{id}', [AdminController::class, 'updateSchool'])
 // Toggle school status
 Route::post('/admin/schools/{id}/toggle', [AdminController::class, 'toggleSchool'])
     ->name('admin.schools.toggle');
+
+// Store School
+Route::post('/admin/schools', [AdminController::class, 'storeSchool'])
+    ->name('admin.schools.store');
